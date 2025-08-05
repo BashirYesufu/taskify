@@ -1,60 +1,75 @@
 class Project {
-  String? artist;
-  num? ticketPrice;
-  String? duration;
-  String? location;
-  String? locationHex;
-  DateTime? eventDate;
-  String? ticketRef;
-  num? quantityAvailable;
-  bool? purchased;
-  DateTime? purchasedAt;
+  String? id;
+  String? name;
+  String? description;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  bool? completed;
+  List<Task>? tasks;
 
   Project({
-    this.artist,
-    this.ticketPrice,
-    this.duration,
-    this.location,
-    this.locationHex,
-    this.eventDate,
-    this.ticketRef,
-    this.quantityAvailable,
-    this.purchased,
-    this.purchasedAt,
+    this.id,
+    this.name,
+    this.description,
+    this.createdAt,
+    this.updatedAt,
+    this.completed,
+    this.tasks,
   });
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is Project && runtimeType == other.runtimeType && ticketRef == other.ticketRef;
-  }
-
-  @override
-  int get hashCode => ticketRef.hashCode;
-
   factory Project.fromJson(Map<String, dynamic> json) => Project(
-    artist: json["artist"],
-    ticketPrice: json["ticket_price"],
-    duration: json["duration"],
-    location: json["location"],
-    locationHex: json["location_hex"],
-    eventDate: json["event_date"] == null ? null : DateTime.parse(json["event_date"]),
-    ticketRef: json["ticket_ref"],
-    quantityAvailable: json["quantity_available"],
-    purchased: json["purchased"],
-    purchasedAt: json["purchased_at"] == null ? null : DateTime.parse(json["purchased_at"]),
+    id: json["id"],
+    name: json["name"],
+    description: json["description"],
+    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+    completed: json["completed"],
+    tasks: json["tasks"] == null ? [] : List<Task>.from(json["tasks"]!.map((x) => Task.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
-    "artist": artist,
-    "ticket_price": ticketPrice,
-    "duration": duration,
-    "location": location,
-    "location_hex": locationHex,
-    "event_date": eventDate?.toIso8601String(),
-    "ticket_ref": ticketRef,
-    "quantity_available": quantityAvailable,
-    "purchased": purchased,
-    "purchased_at": purchasedAt,
+    "id": id,
+    "name": name,
+    "description": description,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "completed": completed,
+    "tasks": tasks == null ? [] : List<dynamic>.from(tasks!.map((x) => x.toJson())),
+  };
+}
+
+class Task {
+  bool? completed;
+  String? id;
+  String? priority;
+  String? description;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+
+  Task({
+    this.completed,
+    this.id,
+    this.priority,
+    this.description,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory Task.fromJson(Map<String, dynamic> json) => Task(
+    completed: json["completed"],
+    id: json["id"],
+    priority: json["priority"],
+    description: json["description"],
+    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "completed": completed,
+    "id": id,
+    "priority": priority,
+    "description": description,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
   };
 }

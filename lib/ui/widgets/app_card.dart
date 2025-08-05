@@ -13,6 +13,7 @@ class AppCard extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final bool wrap;
   final double borderWidth;
+  final Function()? onTap;
 
   const AppCard({
     this.height = 100,
@@ -26,33 +27,37 @@ class AppCard extends StatelessWidget {
     this.padding,
     this.borderWidth = 1,
     this.radiusGeometry,
+    this.onTap,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: wrap ? null : height,
-      width: wrap ? null : width,
-      margin: margin,
-      padding: padding,
-      decoration: BoxDecoration(
-        color: backgroundColor ?? ColorManager.backGround,
-        borderRadius: radiusGeometry ?? BorderRadius.circular(borderRadius ?? 12),
-        border: Border.all(
-          color: borderColor ?? ColorManager.grey.withValues(alpha: 0.3),
-          width: borderWidth,
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: wrap ? null : height,
+        width: wrap ? null : width,
+        margin: margin,
+        padding: padding,
+        decoration: BoxDecoration(
+          color: backgroundColor ?? ColorManager.backGround,
+          borderRadius: radiusGeometry ?? BorderRadius.circular(borderRadius ?? 12),
+          border: Border.all(
+            color: borderColor ?? ColorManager.grey.withValues(alpha: 0.3),
+            width: borderWidth,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x0A000000),
+              blurRadius: 30,
+              offset: Offset(8, 4),
+              spreadRadius: 0,
+            )
+          ],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x0A000000),
-            blurRadius: 30,
-            offset: Offset(8, 4),
-            spreadRadius: 0,
-          )
-        ],
+        child: child,
       ),
-      child: child,
     );
   }
 }

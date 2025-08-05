@@ -6,7 +6,7 @@ import '../../data/models/reponse/user.dart';
 
 class DataPersistor {
 
-  static void saveProjects(List<Project> data) async {
+  static Future<void> saveProjects(List<Project> data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(data.isEmpty){
       return;
@@ -23,6 +23,33 @@ class DataPersistor {
     }
     List<Project> jsonData = List<Project>.from(jsonDecode(cache).map((json)=> Project.fromJson(json)));
     return jsonData;
+  }
+
+  static Future<void> editProject(Project updatedProject) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final cache = prefs.getString(DataPersistorKeys.keyProject);
+    if (cache == null) return;
+    List<Project> projects = List<Project>.from(
+      jsonDecode(cache).map((json) => Project.fromJson(json)),
+    );
+    int index = projects.indexWhere((project) => project.id == updatedProject.id);
+    if (index != -1) {
+      updatedProject.updatedAt = DateTime.now();
+      projects[index] = updatedProject;
+      prefs.setString(DataPersistorKeys.keyProject, jsonEncode(projects.map((e) => e.toJson()).toList()));
+    }
+  }
+
+  static Future<void> deleteProject(String projectId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final cache = prefs.getString(DataPersistorKeys.keyProject);
+    if (cache == null) return;
+
+    List<Project> projects = List<Project>.from(
+      jsonDecode(cache).map((json) => Project.fromJson(json)),
+    );
+    projects.removeWhere((project) => project.id == projectId);
+    prefs.setString(DataPersistorKeys.keyProject, jsonEncode(projects.map((e) => e.toJson()).toList()));
   }
 
   static void saveUser(User? user) async{
@@ -45,7 +72,6 @@ class DataPersistor {
     User response = User.fromJson(jsonMap);
     return response;
   }
-
 
   static void saveUserTheme({required String theme}) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();

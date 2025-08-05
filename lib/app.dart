@@ -1,21 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskify/util/persistor/data_persistor.dart';
+import 'package:taskify/util/provider/providers.dart';
 import 'package:taskify/util/route/route_handler.dart';
+import 'package:taskify/util/ui_util/theme/theme_manager.dart';
+import 'data/models/enums/app_theme.dart';
 
 class App extends StatefulWidget {
-  const App({super.key});
-  static final App sharedInstance = App();
+
+  App({super.key});
+
+  static final sharedInstance = App();
+  static final navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   State<App> createState() => _AppState();
 }
 
 class _AppState extends State<App> {
+  String currentTheme = AppTheme.system.name;
+
+  @override
+  void initState() {
+    WidgetsFlutterBinding.ensureInitialized();
+    getCurrentTheme();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: RouteHandler.routes,
-      initialRoute: RouteHandler.initialRoute,
-      onGenerateRoute: RouteHandler.onGenerateRoute,
+    return Consumer(
+      builder: (BuildContext context, WidgetRef ref, _) {
+        var themePro = ref.watch(themeProvider);
+        return MaterialApp(
+          title: 'Taskify',
+          navigatorKey: App.navigatorKey,
+          debugShowCheckedModeBanner: false,
+          themeMode: themePro.theme == AppTheme.light
+              ? ThemeMode.light
+              : themePro.theme == AppTheme.dark
+              ? ThemeMode.dark
+              : ThemeMode.system,
+          darkTheme: ThemeManager.sharedInstance.darkTheme,
+          theme: ThemeManager.sharedInstance.theme,
+          routes: RouteHandler.routes,
+          initialRoute: RouteHandler.initialRoute,
+          onGenerateRoute: RouteHandler.onGenerateRoute,
+        );
+      },
     );
   }
+
+  void getCurrentTheme()async{
+    String theme = await DataPersistor.getUserTheme();
+    setState(() {
+      if(theme.isNotEmpty) {
+        currentTheme = theme;
+      }
+    });
+  }
+
 }
