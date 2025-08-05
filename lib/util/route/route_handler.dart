@@ -8,7 +8,7 @@ import '../../ui/features/project/create_project_screen.dart';
 import '../../ui/features/project/project_details_screen.dart';
 
 class RouteHandler {
-  static String initialRoute = Dashboard.routeName;
+  static String initialRoute = LoginScreen.routeName;
 
   static Map<String, WidgetBuilder> routes = {
     Dashboard.routeName: (context) => Dashboard(),
