@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskify/bloc/dashboard/dashboard_bloc.dart';
 import '../../../data/models/local/dashboard_bar_item.dart';
 import '../../../util/route/app_router.dart';
 import '../../../util/ui_util/app_text_styles.dart';
@@ -17,7 +18,22 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final DashboardBloc _dashboardBloc = DashboardBloc.sharedInstance;
   int selectedIndex = 0;
+
+  void bindBloc(){
+    _dashboardBloc.dashboardNavResponse.listen((tab) {
+      setState(() {
+        selectedIndex = tab;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    bindBloc();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
