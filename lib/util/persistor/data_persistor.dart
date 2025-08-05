@@ -104,6 +104,50 @@ class DataPersistor {
     return project;
   }
 
+  static Future<Project?> rescheduleTask(
+    String projectId,
+    String taskId,
+    DateTime newDueDate,
+  ) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final cache = prefs.getString(DataPersistorKeys.keyProject);
+    if (cache == null) return null;
+
+    List<Project> projects = List<Project>.from(
+      jsonDecode(cache).map((json) => Project.fromJson(json)),
+    );
+
+    Project? project = projects.firstWhere(
+          (p) => p.id == projectId,
+      orElse: () => Project(),
+    );
+
+    if (project.id == null || project.tasks == null) return null;
+
+    Task? task = project.tasks!.firstWhere(
+          (t) => t.id == taskId,
+      orElse: () => Task(),
+    );
+
+    if (task.id == null) return null;
+
+    // Update only the dueDate of the task
+    task.dueAt = newDueDate;
+    task.updatedAt = DateTime.now();
+
+    // Update project timestamp
+    project.updatedAt = DateTime.now();
+
+    // Save updated projects list back to cache
+    prefs.setString(
+      DataPersistorKeys.keyProject,
+      jsonEncode(projects.map((e) => e.toJson()).toList()),
+    );
+
+    return project;
+  }
+
+
   static Future<Project?> getProjectById(String projectId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final cache = prefs.getString(DataPersistorKeys.keyProject);

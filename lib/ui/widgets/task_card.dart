@@ -22,7 +22,7 @@ class TaskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      padding: const EdgeInsets.only(bottom: 60.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,15 +50,14 @@ class TaskCard extends StatelessWidget {
                 color: ColorManager.green,
                 child: Icon(Icons.check, size: 12, color: Colors.white,),
               ) : SizedBox(
-                width: 100,
+                width: !isDue ? 160 : 100,
                 child: AppButton(
-                  title: isDue ? 'Reschedule' : 'Done',
-                  onTap: ()=> isDue ? delegate.reschedule(task) : delegate.markAsDone(task),
+                  title: !isDue ? 'Suggest New Time' : 'Done',
+                  onTap: ()=> !isDue ? delegate.reschedule(task) : delegate.markAsDone(task),
                 ),
               )
             ],
           ),
-
         ],
       ),
     );

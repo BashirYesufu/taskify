@@ -38,15 +38,9 @@ class _AISchedulerScreenState extends State<AISchedulerScreen> with TaskDelegate
   List<Task> tasks = [];
   AiProject? aiProject;
   Debouncer? debouncer;
+  Stream<bool>? loader;
 
-
-  void bindBloc(){
-    _projectBloc.createProjectResponse.listen((task){
-      UIActions.showSuccessPopup(context, message: 'Task created successfully', onTap: ()=> Dashboard.launch(context),);
-    }, onError:(error){
-      UIActions.showError(context, message: error);
-    });
-
+  bindAIBloc(){
     _aiBloc.aiDescriptionResponse.listen((project){
       aiProject = project;
       setState(() {
@@ -63,12 +57,34 @@ class _AISchedulerScreenState extends State<AISchedulerScreen> with TaskDelegate
     }, onError:(error){
       UIActions.showError(context, message: error);
     });
+
+    _aiBloc.progressStatusObservable.listen((loading){
+      setState(() {
+        loader = loading ? _aiBloc.progressStatusObservable : null;
+      });
+    });
+  }
+
+  void bindBloc(){
+    _projectBloc.createProjectResponse.listen((task){
+      UIActions.showSuccessPopup(context, message: 'Project created successfully', onTap: ()=> Dashboard.launch(context),);
+    }, onError:(error){
+      UIActions.showError(context, message: error);
+    });
+
+    _projectBloc.progressStatusObservable.listen((loading){
+      setState(() {
+        loader = loading ? _projectBloc.progressStatusObservable : null;
+      });
+    });
+
   }
 
   @override
   void initState() {
     debouncer = Debouncer(milliseconds: 500);
     bindBloc();
+    bindAIBloc();
     super.initState();
   }
 
@@ -81,7 +97,7 @@ class _AISchedulerScreenState extends State<AISchedulerScreen> with TaskDelegate
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      loadingStream: _projectBloc.progressStatusObservable,
+      loadingStream: loader,
       scrollChild: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

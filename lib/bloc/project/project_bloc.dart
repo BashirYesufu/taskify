@@ -111,6 +111,30 @@ class ProjectBloc extends BaseBloc {
     });
   }
 
+  final _rescheduleTaskSubject = BehaviorSubject<Project?>();
+  Stream<Project?> get rescheduleTaskResponse => _rescheduleTaskSubject.stream;
+  void rescheduleTask({required String? projectId, required String? taskId, required DateTime? dueDate}) async {
+    if (projectId == null || projectId.isEmpty){
+      _rescheduleTaskSubject.sink.addError('Invalid project id');
+      return;
+    }
+    if (taskId == null || taskId.isEmpty){
+      _rescheduleTaskSubject.sink.addError('Invalid task id');
+      return;
+    }
+    if (dueDate == null){
+      _rescheduleTaskSubject.sink.addError('Invalid due date');
+      return;
+    }
+    toggleProgress(true);
+    await Future.delayed(Duration(milliseconds: 1500)).then((onValue) async {
+      toggleProgress(false);
+      await DataPersistor.rescheduleTask(projectId, taskId, dueDate).then((project){
+        _rescheduleTaskSubject.sink.add(project);
+      });
+    });
+  }
+
   final _deleteProjectSubject = BehaviorSubject<bool>();
   Stream<bool> get deleteProjectSubjectResponse => _deleteProjectSubject.stream;
   void deleteProject({required String? projectId}) async {

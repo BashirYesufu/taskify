@@ -35,7 +35,7 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> with TaskDele
 
   void bindBloc(){
     _projectBloc.createProjectResponse.listen((task){
-      UIActions.showSuccessPopup(context, message: 'Task created successfully', onTap: ()=> Dashboard.launch(context),);
+      UIActions.showSuccessPopup(context, message: 'Project created successfully', onTap: ()=> Dashboard.launch(context),);
     }, onError:(error){
       UIActions.showError(context, message: error);
     });

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:taskify/bloc/project/project_bloc.dart';
 import 'package:taskify/data/models/reponse/project.dart';
 import 'package:taskify/ui/features/dashboard/dashboard.dart';
+import 'package:taskify/ui/sheets/time_sheet.dart';
 import 'package:taskify/ui/widgets/project_card.dart';
 import 'package:taskify/ui/widgets/task_card.dart';
 import 'package:taskify/util/ui_util/app_text_styles.dart';
@@ -22,7 +23,7 @@ class ProjectDetailsScreen extends StatefulWidget {
   State<ProjectDetailsScreen> createState() => _ProjectDetailsScreenState();
 }
 
-class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> with ProceedDelegate{
+class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> with ProceedDelegate, TaskTimeDelegate{
   final ProjectBloc _projectBloc = ProjectBloc();
   Project? project;
 
@@ -38,6 +39,14 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> with Procee
     });
 
     _projectBloc.markTaskAsDoneResponse.listen((project){
+      setState(() {
+        this.project = project;
+      });
+    }, onError:(error){
+      UIActions.showError(context, message: error);
+    });
+
+    _projectBloc.rescheduleTaskResponse.listen((project){
       setState(() {
         this.project = project;
       });
@@ -96,7 +105,12 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> with Procee
 
   @override
   void reschedule(Task task) {
-    // TODO: implement reschedule
+    TaskTimeSheet.launch(context, delegate: this, task: task);
+  }
+
+  @override
+  void rescheduleTask(Task task, DateTime time) {
+   _projectBloc.rescheduleTask(projectId: project?.id, taskId: task.id, dueDate: time);
   }
 
 }

@@ -34,7 +34,7 @@ class _ProjectCardState extends State<ProjectCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Flexible(child: Text(project.name ?? '', style: AppTextStyles.medium(context, size: 16),)),
-              Text('${project.tasks?.length ?? 0} Task ${(project.tasks?.length ?? 0)> 1 ? 's' : ''}', style: AppTextStyles.bold(context, color: project.completed == true ? ColorManager.green : ColorManager.orange),),
+              Text('${project.tasks?.length ?? 0} Task${(project.tasks?.length ?? 0)> 1 ? 's' : ''}', style: AppTextStyles.bold(context, color: project.completed == true ? ColorManager.green : ColorManager.orange),),
             ],
           ),
           Flexible(child: Padding(
