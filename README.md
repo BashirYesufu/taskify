@@ -27,6 +27,9 @@ Create an env file called .env with a base 64 encryption key and your gemini api
 
 Run your simulator for iOS or android emulator and smash the build button. Easy!
 
+## AI
+The AI generation is powered by gemini for no reason in particular, it's just the one i have an api key for.
+
 ## Architecture
 The app follows a BLoC + Repository pattern combined with RxDart.
 The architecture choice is informed by the simplicity of the project to be delivered, Other complex state management libraries and techniques could be employed but to keep it lightweight, this was used.
