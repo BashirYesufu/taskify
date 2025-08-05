@@ -44,6 +44,7 @@ class Task {
   String? priority;
   String? description;
   DateTime? createdAt;
+  DateTime? dueAt;
   DateTime? updatedAt;
 
   Task({
@@ -52,6 +53,7 @@ class Task {
     this.priority,
     this.description,
     this.createdAt,
+    this.dueAt,
     this.updatedAt,
   });
 
@@ -61,6 +63,7 @@ class Task {
     priority: json["priority"],
     description: json["description"],
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+    dueAt: json["dueAt"] == null ? null : DateTime.parse(json["dueAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
   );
 
@@ -70,6 +73,7 @@ class Task {
     "priority": priority,
     "description": description,
     "createdAt": createdAt?.toIso8601String(),
+    "dueAt": dueAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
   };
 }

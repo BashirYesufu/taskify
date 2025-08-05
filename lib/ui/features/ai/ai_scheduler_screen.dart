@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskify/bloc/ai/ai_bloc.dart';
 import 'package:taskify/bloc/project/project_bloc.dart';
 import 'package:taskify/data/models/enums/task_priority.dart';
 import 'package:taskify/data/models/reponse/project.dart';
@@ -15,27 +16,33 @@ import '../../widgets/app_button.dart';
 import '../../widgets/app_input_field.dart';
 import '../../widgets/app_scaffold.dart';
 
-class CreateProjectScreen extends StatefulWidget {
-  const CreateProjectScreen({super.key});
-  static const routeName = "/create-project";
+class AISchedulerScreen extends StatefulWidget {
+  const AISchedulerScreen({super.key});
+  static const routeName = "/ai-scheduler";
 
   static void launch(BuildContext context){
     AppRouter.launch(context, routeName: routeName);
   }
 
   @override
-  State<CreateProjectScreen> createState() => _CreateProjectScreenState();
+  State<AISchedulerScreen> createState() => _AISchedulerScreenState();
 }
 
-class _CreateProjectScreenState extends State<CreateProjectScreen> with TaskDelegate{
+class _AISchedulerScreenState extends State<AISchedulerScreen> with TaskDelegate{
   final ProjectBloc _projectBloc = ProjectBloc();
-  final TextEditingController _nameTC = TextEditingController();
+  final AiBloc _aiBloc = AiBloc();
   final TextEditingController _descriptionTC = TextEditingController();
   List<Task> tasks = [];
 
   void bindBloc(){
     _projectBloc.createProjectResponse.listen((task){
       UIActions.showSuccessPopup(context, message: 'Task created successfully', onTap: ()=> Dashboard.launch(context),);
+    }, onError:(error){
+      UIActions.showError(context, message: error);
+    });
+
+    _aiBloc.aiDescriptionResponse.listen((task){
+      print(task);
     }, onError:(error){
       UIActions.showError(context, message: error);
     });
@@ -55,14 +62,8 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> with TaskDele
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('New Project', style: AppTextStyles.bold(context, size: 24),),
+            Text('AI Scheduler', style: AppTextStyles.bold(context, size: 24),),
             Text('Track your work with a project and tasks', style: AppTextStyles.regular(context),),
-            AppInputField(
-              title: 'Project Name',
-              hintText: 'Enter project name',
-              padding: EdgeInsets.symmetric(vertical: 20),
-              controller: _nameTC,
-            ),
             AppInputField(
               title: 'Project Description',
               hintText: 'Enter project description',
@@ -76,7 +77,7 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> with TaskDele
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                   Text('Tasks', style: AppTextStyles.medium(context),),
+                    Text('Tasks', style: AppTextStyles.medium(context),),
                     AppRoundedView(
                       size: 50,
                       onTap: ()=> TaskSheet.launch(context, delegate: this),
@@ -129,13 +130,13 @@ class _CreateProjectScreenState extends State<CreateProjectScreen> with TaskDele
         ),
       ),
       bottomNavigationBar: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: AppButton(
-              title: 'Create Project',
-              onTap: ()=> _projectBloc.createProject(description: _descriptionTC.text, name: _nameTC.text, tasks: tasks),
-            ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: AppButton(
+            title: 'Create Project',
+            onTap: ()=> _projectBloc.createProject(description: _descriptionTC.text, name: '_nameTC.text', tasks: tasks),
           ),
+        ),
       ),
     );
   }

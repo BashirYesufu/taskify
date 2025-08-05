@@ -52,6 +52,72 @@ class DataPersistor {
     prefs.setString(DataPersistorKeys.keyProject, jsonEncode(projects.map((e) => e.toJson()).toList()));
   }
 
+  static Future<void> addProject(Project newProject) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final cache = prefs.getString(DataPersistorKeys.keyProject);
+    List<Project> projects = [];
+
+    if (cache != null) {
+      projects = List<Project>.from(
+        jsonDecode(cache).map((json) => Project.fromJson(json)),
+      );
+    }
+    projects.add(newProject);
+    prefs.setString(DataPersistorKeys.keyProject, jsonEncode(projects.map((e) => e.toJson()).toList()));
+  }
+
+  static Future<Project?> markTaskAsDone(String projectId, String taskId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final cache = prefs.getString(DataPersistorKeys.keyProject);
+    if (cache == null) return null;
+
+    List<Project> projects = List<Project>.from(
+      jsonDecode(cache).map((json) => Project.fromJson(json)),
+    );
+
+    Project? project = projects.firstWhere(
+          (p) => p.id == projectId,
+      orElse: () => Project(),
+    );
+
+    if (project.id == null || project.tasks == null) return null;
+
+    Task? task = project.tasks!.firstWhere(
+          (t) => t.id == taskId,
+      orElse: () => Task(),
+    );
+
+    if (task.id == null) return null;
+    task.completed = true;
+    task.updatedAt = DateTime.now();
+    bool allTasksCompleted = project.tasks!.every((t) => t.completed == true);
+    if (allTasksCompleted) {
+      project.completed = true;
+    }
+
+    project.updatedAt = DateTime.now();
+    prefs.setString(
+      DataPersistorKeys.keyProject,
+      jsonEncode(projects.map((e) => e.toJson()).toList()),
+    );
+
+    return project;
+  }
+
+  static Future<Project?> getProjectById(String projectId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final cache = prefs.getString(DataPersistorKeys.keyProject);
+    if (cache == null) return null;
+    List<Project> projects = List<Project>.from(
+      jsonDecode(cache).map((json) => Project.fromJson(json)),
+    );
+    Project? project = projects.firstWhere(
+          (p) => p.id == projectId,
+      orElse: () => Project(),
+    );
+    return project.id != null ? project : null;
+  }
+
   static void saveUser(User? user) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(user==null){

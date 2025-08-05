@@ -1,68 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:omni_datetime_picker/omni_datetime_picker.dart';
+import 'dart:math';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import '../data/common/variables.dart';
 
 class Helper {
-
-  static Future<void> showPlatformDatePicker(
-      BuildContext context, {
-        required Function(DateTime date) onDateSelected,
-        bool pickTime = false,
-        bool canPickPast = false,
-        bool canPickFuture = false,
-        DateTime? initialDate,
-      }) async {
-      DateTime? selectedDate;
-      if (pickTime) {
-        selectedDate = await showOmniDateTimePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: initialDate ?? (canPickPast ? DateTime(1900) : DateTime.now()),
-          lastDate: null,
-          is24HourMode: false,
-          isShowSeconds: false,
-          minutesInterval: 1,
-          secondsInterval: 1,
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-          constraints: BoxConstraints(
-            maxWidth: 350,
-            maxHeight: 650,
-          ),
-          transitionBuilder: (context, anim1, anim2, child) {
-            return FadeTransition(
-              opacity: anim1.drive(
-                Tween(
-                  begin: 0,
-                  end: 1,
-                ),
-              ),
-              child: child,
-            );
-          },
-          transitionDuration: Duration(milliseconds: 200),
-          barrierDismissible: true,
-        );
-      } else {
-        selectedDate = await showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: canPickPast ? DateTime(1900) : DateTime.now(),
-            lastDate: canPickFuture ? DateTime(3000) : DateTime.now(),
-            builder: (context, child){
-              return DatePickerDialog(
-                firstDate: initialDate ?? (canPickPast ? DateTime(1900) : DateTime.now()),
-                lastDate: canPickFuture ? DateTime(3000) : DateTime.now(),
-                initialDate: initialDate ?? DateTime.now(),
-              );
-            }
-        );
-      }
-
-      if (selectedDate != null) {
-        onDateSelected.call(selectedDate);
-      }
-  }
 
   static String encryptText(String text){
     final key = encrypt.Key.fromUtf8(Variables.encryptionKey.padRight(32).substring(0, 32));
@@ -79,6 +19,18 @@ class Helper {
     final encrypted = encrypt.Encrypted.fromBase64(text);
     final decrypted = encrypter.decrypt(encrypted, iv: iv);
     return decrypted;
+  }
+
+  static String generateSecureId({int length = 6}) {
+    const String letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const String numbers = '0123456789';
+    const String allChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    Random random = Random();
+    String firstChar = letters[random.nextInt(letters.length)];
+    String secondChar = numbers[random.nextInt(numbers.length)];
+    List<String> remainingChars = List.generate(length, (index) => allChars[random.nextInt(allChars.length)]);
+    List<String> idChars = [firstChar, secondChar, ...remainingChars]..shuffle();
+    return idChars.join();
   }
 
 }

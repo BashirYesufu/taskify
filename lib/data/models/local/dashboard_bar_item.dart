@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../ui/features/dashboard/home_screen.dart';
+import '../../../ui/features/more/more_screen.dart';
+import '../../../ui/features/project/project_screen.dart';
 
 class DashboardBarItem {
   String title;
@@ -14,8 +16,8 @@ class DashboardBarItem {
   
   static List<DashboardBarItem> items = [
     DashboardBarItem(title: 'Home', screen: HomeScreen(), icon: Icons.home),
-    DashboardBarItem(title: 'Tasks', screen: Container(), icon: Icons.task),
-    DashboardBarItem(title: 'More', screen: Container(), icon: Icons.more_horiz_rounded),
+    DashboardBarItem(title: 'Projects', screen: ProjectScreen(), icon: Icons.task),
+    DashboardBarItem(title: 'More', screen: MoreScreen(), icon: Icons.more_horiz_rounded),
   ];
 
 }

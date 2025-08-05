@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:taskify/ui/features/auth/registration_screen.dart';
 import 'package:taskify/ui/features/dashboard/dashboard.dart';
 import 'package:taskify/ui/widgets/app_button.dart';
 import 'package:taskify/ui/widgets/app_input_field.dart';
@@ -6,6 +8,7 @@ import 'package:taskify/ui/widgets/app_pass_word_field.dart';
 import '../../../bloc/auth/auth_bloc.dart';
 import '../../../util/route/app_router.dart';
 import '../../../util/ui_util/app_text_styles.dart';
+import '../../../util/ui_util/color/color_manager.dart';
 import '../../../util/ui_util/ui_actions.dart';
 import '../../widgets/app_scaffold.dart';
 
@@ -57,6 +60,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: _passwordTC,
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: 'Don\'t have account? ',
+                    style: AppTextStyles.regular(context, secondary: true),
+                    children: [
+                      TextSpan(
+                        recognizer: TapGestureRecognizer()..onTap = ()=> RegisterScreen.launch(context),
+                        text: 'Create one',
+                        style: AppTextStyles.medium(context, color: ColorManager.green),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            )
+
           ],
         ),
       ),

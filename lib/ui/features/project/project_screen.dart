@@ -9,14 +9,14 @@ import '../../../util/ui_util/color/color_manager.dart';
 import '../../widgets/app_input_field.dart';
 import '../../widgets/app_scaffold.dart';
 
-class BankListScreen extends StatefulWidget {
-  const BankListScreen({super.key});
+class ProjectScreen extends StatefulWidget {
+  const ProjectScreen({super.key});
 
   @override
-  State<BankListScreen> createState() => _BankListScreenState();
+  State<ProjectScreen> createState() => _ProjectScreenState();
 }
 
-class _BankListScreenState extends State<BankListScreen> {
+class _ProjectScreenState extends State<ProjectScreen> {
   TextEditingController searchController = TextEditingController();
   final ProjectBloc _projectBloc = ProjectBloc();
 
@@ -29,6 +29,7 @@ class _BankListScreenState extends State<BankListScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+        hasAppBar: false,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(

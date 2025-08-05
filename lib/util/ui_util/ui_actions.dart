@@ -93,7 +93,7 @@ class UIActions {
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Container(
               decoration: BoxDecoration(
-                color: backgroundColor ?? ColorManager.backGround,
+                color: backgroundColor ?? ColorManager.of(context).cardMain,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
@@ -154,5 +154,11 @@ class UIActions {
       ]);
     });
     return null;
+  }
+
+  static showErrorSnackBar(BuildContext context, String message){
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(backgroundColor: Colors.red, content: Text(message, style: AppTextStyles.regular(context, color: Colors.white),),),
+    );
   }
 }

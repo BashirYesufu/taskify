@@ -115,7 +115,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ],
             )
-          ],
+,          ],
         ),
       ),
       bottomNavigationBar: SafeArea(child: Padding(

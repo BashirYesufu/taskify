@@ -6,4 +6,6 @@ class Variables {
     return dotenv.env['ENCRYPTION_KEY'] ?? '';
   }
 
+  static String get geminiKey => dotenv.env['GEMINI_KEY'] ?? '';
+
 }
