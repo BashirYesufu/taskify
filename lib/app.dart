@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskify/util/persistor/data_persistor.dart';
 import 'package:taskify/util/provider/providers.dart';
 import 'package:taskify/util/route/route_handler.dart';
 import 'package:taskify/util/ui_util/theme/theme_manager.dart';
@@ -18,12 +17,10 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  String currentTheme = AppTheme.system.name;
 
   @override
   void initState() {
     WidgetsFlutterBinding.ensureInitialized();
-    getCurrentTheme();
     super.initState();
   }
 
@@ -49,15 +46,6 @@ class _AppState extends State<App> {
         );
       },
     );
-  }
-
-  void getCurrentTheme()async{
-    String theme = await DataPersistor.getUserTheme();
-    setState(() {
-      if(theme.isNotEmpty) {
-        currentTheme = theme;
-      }
-    });
   }
 
 }

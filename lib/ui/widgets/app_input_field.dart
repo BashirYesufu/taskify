@@ -109,9 +109,9 @@ class _AppInputFieldState extends State<AppInputField> {
           Container(
             height: widget.height * widget.maxLines.toDouble(),
             decoration: BoxDecoration(
-              color: widget.backgroundColor ?? ColorManager.backGround,
+              color: widget.backgroundColor ?? ColorManager.of(context).cardMain,
               shape: BoxShape.rectangle,
-              border: Border.all(color: widget.borderColor ?? ColorManager.nav),
+              border: Border.all(color: widget.borderColor ?? ColorManager.of(context).cardMain),
               borderRadius: BorderRadius.circular(widget.rounded ? widget.height / 2 : 12),
             ),
             padding: widget.inputPadding ?? EdgeInsets.only(top: widget.prefixIcon == null ? 0.0 : 4.0, left: widget.prefixIcon == null ? 16.0 : 0, bottom: widget.prefixIcon == null ? 6.0 : 0.0) ,
@@ -133,7 +133,7 @@ class _AppInputFieldState extends State<AppInputField> {
               readOnly: widget.readOnly,
               keyboardType: widget.keyboardType,
               textCapitalization: widget.textCapitalization ?? TextCapitalization.none,
-              cursorColor: ColorManager.black,
+              cursorColor: ColorManager.green,
               inputFormatters: widget.formatters,
               maxLength: widget.maxLength,
               obscureText: widget.obscureText,

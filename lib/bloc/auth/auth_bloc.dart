@@ -35,7 +35,7 @@ class AuthBloc extends BaseBloc {
   final _registerSubject = PublishSubject<User>();
   Stream<User> get registerResponse => _registerSubject.stream;
   void register({required String? email, required String? password, required String? passwordConfirmation, required bool isValidPassword}) async {
-    if(email == null || email.length != 10){
+    if(email == null || email.isEmpty){
       _registerSubject.sink.addError('Kindly enter a valid email address');
       return;
     }

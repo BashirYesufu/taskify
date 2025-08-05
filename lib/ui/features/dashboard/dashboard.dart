@@ -24,10 +24,10 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       body: SafeArea(child: DashboardBarItem.items[selectedIndex].screen),
       bottomNavigationBar: Container(
-        color: Colors.white,
+        color: ColorManager.of(context).cardMain,
         height: 62,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: List.generate(DashboardBarItem.items.length, (index){
             DashboardBarItem item = DashboardBarItem.items[index];
             return InkWell(

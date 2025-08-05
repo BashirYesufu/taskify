@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:taskify/ui/features/auth/login_screen.dart';
 import 'package:taskify/ui/features/dashboard/dashboard.dart';
 import 'package:taskify/ui/widgets/app_button.dart';
 import 'package:taskify/ui/widgets/app_input_field.dart';
@@ -7,6 +9,7 @@ import '../../../util/route/app_router.dart';
 import '../../../util/ui_util/app_text_styles.dart';
 import '../../../util/ui_util/color/color_manager.dart';
 import '../../../util/ui_util/ui_actions.dart';
+import '../../widgets/app_pass_word_field.dart';
 import '../../widgets/app_scaffold.dart';
 import '../../widgets/app_views.dart';
 
@@ -44,6 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+      hasBackButton: false,
       loadingStream: _authBloc.progressStatusObservable,
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -59,7 +63,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: AppInputField(
+              child: AppPasswordField(
                 title: 'Password',
                 hintText: 'Enter password',
                 controller: _passwordTC,
@@ -84,7 +88,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: AppInputField(
+              child: AppPasswordField(
                 title: 'Confirm Password',
                 hintText: 'Confirm your password',
                 controller: _confirmPasswordTC,
@@ -93,6 +97,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 },
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: 'Already have account? ',
+                    style: AppTextStyles.regular(context, secondary: true),
+                    children: [
+                      TextSpan(
+                        recognizer: TapGestureRecognizer()..onTap = ()=> LoginScreen.launch(context),
+                        text: 'Login',
+                        style: AppTextStyles.medium(context, color: ColorManager.green),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),

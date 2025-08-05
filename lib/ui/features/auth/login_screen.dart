@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:taskify/ui/features/dashboard/dashboard.dart';
 import 'package:taskify/ui/widgets/app_button.dart';
 import 'package:taskify/ui/widgets/app_input_field.dart';
+import 'package:taskify/ui/widgets/app_pass_word_field.dart';
 import '../../../bloc/auth/auth_bloc.dart';
 import '../../../util/route/app_router.dart';
 import '../../../util/ui_util/app_text_styles.dart';
@@ -34,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+      hasBackButton: false,
       loadingStream: _authBloc.progressStatusObservable,
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -49,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: AppInputField(
+              child: AppPasswordField(
                 title: 'Password',
                 hintText: 'Enter password',
                 controller: _passwordTC,

@@ -54,13 +54,18 @@ class UIActions {
       }) {
     _showPopup(context, (context) {
       return CustomDialog(children: [
-        Icon(Icons.cancel, size: 100, color: Colors.red,),
+        Icon(Icons.cancel, size: 50, color: Colors.red,),
+        Text(
+          'Error',
+          textAlign: TextAlign.center,
+          style: AppTextStyles.regular(context, size: 18, weight: FontWeight.w600),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 15.0),
           child: Text(
             message,
             textAlign: TextAlign.center,
-            style: AppTextStyles.regular(context, size: 18, weight: FontWeight.w600),
+            style: AppTextStyles.regular(context, secondary: true),
           ),
         ),
         AppButton(

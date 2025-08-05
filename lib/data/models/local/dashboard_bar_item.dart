@@ -15,7 +15,7 @@ class DashboardBarItem {
   static List<DashboardBarItem> items = [
     DashboardBarItem(title: 'Home', screen: Container(), icon: Icons.home),
     DashboardBarItem(title: 'Tasks', screen: Container(), icon: Icons.task),
-    DashboardBarItem(title: 'Account', screen: Container(), icon: Icons.person),
+    DashboardBarItem(title: 'More', screen: Container(), icon: Icons.more_horiz_rounded),
   ];
 
 }
