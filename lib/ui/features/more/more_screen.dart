@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../util/provider/providers.dart';
 import '../../../data/models/enums/app_theme.dart';
+import '../../../util/persistor/data_persistor.dart';
 import '../../../util/ui_util/app_text_styles.dart';
 import '../../widgets/app_radio_button.dart';
 import '../../widgets/app_scaffold.dart';
@@ -26,6 +27,13 @@ class _MoreScreenState extends State<MoreScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 14.0),
+              child: FutureBuilder(
+                  future: DataPersistor.getLoginUser(), builder: (context, snap){
+                return Text(snap.data?.email ?? '', style: AppTextStyles.regular(context),);
+              }),
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
