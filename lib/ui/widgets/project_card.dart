@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:taskify/ui/features/project/project_details_screen.dart';
-import 'package:taskify/ui/widgets/app_card.dart';
 import 'package:taskify/util/extensions/date.dart';
 import '../../data/models/reponse/project.dart';
 import '../../util/ui_util/app_text_styles.dart';
+import 'app_views.dart';
 
 class ProjectCard extends StatefulWidget {
   const ProjectCard({required this.project, this.canViewDetails = true, super.key});

@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../../ui/features/dashboard/home_screen.dart';
 
 class DashboardBarItem {
   String title;
@@ -13,7 +13,7 @@ class DashboardBarItem {
 });
   
   static List<DashboardBarItem> items = [
-    DashboardBarItem(title: 'Home', screen: Container(), icon: Icons.home),
+    DashboardBarItem(title: 'Home', screen: HomeScreen(), icon: Icons.home),
     DashboardBarItem(title: 'Tasks', screen: Container(), icon: Icons.task),
     DashboardBarItem(title: 'More', screen: Container(), icon: Icons.more_horiz_rounded),
   ];
