@@ -10,8 +10,8 @@ import '../../../util/ui_util/ui_actions.dart';
 import '../../widgets/app_scaffold.dart';
 import '../../widgets/app_views.dart';
 
-class RegisterPasswordScreen extends StatefulWidget {
-  const RegisterPasswordScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
   static const routeName = "/register";
 
   static void launch(BuildContext context){
@@ -19,10 +19,10 @@ class RegisterPasswordScreen extends StatefulWidget {
   }
 
   @override
-  State<RegisterPasswordScreen> createState() => _RegisterPasswordScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterPasswordScreenState extends State<RegisterPasswordScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final AuthBloc _authBloc = AuthBloc();
   final _emailTC = TextEditingController();
   final _passwordTC = TextEditingController();
