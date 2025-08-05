@@ -82,7 +82,7 @@ class _AISchedulerScreenState extends State<AISchedulerScreen> with TaskDelegate
 
   @override
   void initState() {
-    debouncer = Debouncer(milliseconds: 500);
+    debouncer = Debouncer(milliseconds: 2000);
     bindBloc();
     bindAIBloc();
     super.initState();

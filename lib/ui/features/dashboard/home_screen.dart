@@ -77,7 +77,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Jemi AI', style: AppTextStyles.bold(context, size: 24),),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Jemi AI', style: AppTextStyles.bold(context, size: 24),),
+                                  Icon(Icons.keyboard_arrow_right),
+                                ],
+                              ),
                               Text('Intelligent scheduler', style: AppTextStyles.regular(context, secondary: true),),
                             ],
                           ),
