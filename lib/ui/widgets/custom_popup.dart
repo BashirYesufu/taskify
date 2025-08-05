@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../util/ui_util/color_manager.dart';
+import '../../util/ui_util/color/color_manager.dart';
 
 class CustomDialog extends StatelessWidget {
 
@@ -10,7 +10,7 @@ class CustomDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.all(25.0),
-      backgroundColor: ColorManager.backGround,
+      backgroundColor: ColorManager.of(context).mainBackground,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/models/reponse/project.dart';
 import '../../util/ui_util/app_text_styles.dart';
-import '../../util/ui_util/color_manager.dart';
+import '../../util/ui_util/color/color_manager.dart';
 import 'app_check_box.dart';
 
 class ProjectWidget extends StatefulWidget {
@@ -98,7 +98,7 @@ class _ProjectWidgetState extends State<ProjectWidget> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Quantity', style: AppTextStyles.black(weight: FontWeight.w500),),
+                  Text('Quantity', style: AppTextStyles.regular(context, weight: FontWeight.w500),),
                   Container(
                     width: 111,
                     height: 48,
@@ -122,7 +122,7 @@ class _ProjectWidgetState extends State<ProjectWidget> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                          child: Text('$quantity', style: AppTextStyles.black(),),
+                          child: Text('$quantity', style: AppTextStyles.regular(context),),
                         ),
                         InkWell(
                           onTap: () {

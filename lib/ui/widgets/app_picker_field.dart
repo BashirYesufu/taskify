@@ -1,7 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import '../../util/ui_util/app_text_styles.dart';
-import '../../util/ui_util/color_manager.dart';
+import '../../util/ui_util/color/color_manager.dart';
 
 class AppPickerField<T> extends StatefulWidget{
 
@@ -55,7 +55,7 @@ class _AppPickerFieldState<T> extends State<AppPickerField<T>> {
           padding: const EdgeInsets.only(bottom: 10.0),
           child: Text(
               widget.title!,
-              style: AppTextStyles.black(weight: FontWeight.w500)
+              style: AppTextStyles.regular(context, weight: FontWeight.w500)
           ),
         ) :  SizedBox(),
         SizedBox(
@@ -77,12 +77,12 @@ class _AppPickerFieldState<T> extends State<AppPickerField<T>> {
                   showSearchBox: true,
                   searchFieldProps: TextFieldProps(
                     controller: widget.controller,
-                    style: AppTextStyles.black(),
+                    style: AppTextStyles.regular(context),
                     decoration: InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                         prefixIcon: Icon(Icons.search),
                         labelText: "Search",
-                        labelStyle: AppTextStyles.black()
+                        labelStyle: AppTextStyles.regular(context)
                     ),
                   )
               ),
@@ -95,12 +95,12 @@ class _AppPickerFieldState<T> extends State<AppPickerField<T>> {
                 dropdownSearchDecoration: InputDecoration(
                   labelText: widget.hintText,
                   floatingLabelBehavior: FloatingLabelBehavior.never,
-                  hintStyle: AppTextStyles.grey(),
+                  hintStyle: AppTextStyles.regular(context),
                   fillColor: ColorManager.backGround,
                   filled: true,
                   contentPadding: const EdgeInsets.symmetric(horizontal: 8,vertical: 6),
-                  labelStyle: AppTextStyles.black(),
-                  helperStyle: AppTextStyles.black(),
+                  labelStyle: AppTextStyles.regular(context),
+                  helperStyle: AppTextStyles.regular(context),
                   suffixIconColor: ColorManager.grey,
                   prefixIcon: widget.prefixIcon,
                   border: border,
@@ -110,7 +110,7 @@ class _AppPickerFieldState<T> extends State<AppPickerField<T>> {
                   focusedErrorBorder: border,
                   focusedBorder: border,
                 ),
-                baseStyle:  AppTextStyles.black(),
+                baseStyle:  AppTextStyles.regular(context),
               ),
             ),
           ),

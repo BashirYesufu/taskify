@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../util/ui_util/color_manager.dart';
+import '../../util/ui_util/color/color_manager.dart';
 
 class AppButton extends StatelessWidget {
   const AppButton({this.onTap, required this.title, this.decoration, this.textColor, super.key});

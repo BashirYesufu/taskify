@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../ui/widgets/app_button.dart';
 import '../../ui/widgets/custom_popup.dart';
 import '../route/app_router.dart';
 import 'app_text_styles.dart';
-import 'color_manager.dart';
+import 'color/color_manager.dart';
 
 class UIActions {
 
@@ -32,7 +31,36 @@ class UIActions {
           child: Text(
             message,
             textAlign: TextAlign.center,
-            style: AppTextStyles.black(size: 18, weight: FontWeight.w600),
+            style: AppTextStyles.regular(context, size: 18, weight: FontWeight.w600),
+          ),
+        ),
+        AppButton(
+          title: buttonTitle ?? 'Ok',
+          onTap: () {
+            AppRouter.goBack(context);
+            onTap?.call();
+          },
+        ),
+      ]);
+    });
+    return null;
+  }
+
+  static Widget? showError(
+      BuildContext context, {
+        Function()? onTap,
+        required String message,
+        String? buttonTitle,
+      }) {
+    _showPopup(context, (context) {
+      return CustomDialog(children: [
+        Icon(Icons.cancel, size: 100, color: Colors.red,),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          child: Text(
+            message,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.regular(context, size: 18, weight: FontWeight.w600),
           ),
         ),
         AppButton(
@@ -87,7 +115,7 @@ class UIActions {
           padding: const EdgeInsets.symmetric(vertical: 15.0),
           child: Text(
             message,
-            style: AppTextStyles.black(size: 18, weight: FontWeight.w600),
+            style: AppTextStyles.medium(context, size: 18, weight: FontWeight.w600),
             textAlign: TextAlign.center,
           ),
         ),

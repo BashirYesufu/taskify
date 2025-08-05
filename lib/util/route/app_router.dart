@@ -11,9 +11,11 @@ class AppRouter {
   }
 
 
-  //
-  // static void clearAndLaunch(BuildContext context, {required String routeName, dynamic arguments}) {
-  //   Navigator.pushNamedAndRemoveUntil(context, routeName, arguments: arguments);
-  // }
+  static  Future<dynamic> clearAndNavigateTo(BuildContext context, String routeName, {arguments,String endRoute = "/"}) {
+    if(Navigator.canPop(context)){
+      return Navigator.pushNamedAndRemoveUntil(context, routeName,ModalRoute.withName(endRoute),arguments: arguments);
+    }
+    return Navigator.pushReplacementNamed(context, routeName,arguments: arguments);
+  }
 
 }

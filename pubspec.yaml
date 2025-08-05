@@ -22,6 +22,7 @@ dependencies:
   awesome_notifications: ^0.10.1
   encrypt: ^5.0.3
   omni_datetime_picker: ^2.0.4
+  blurry_modal_progress_hud: ^1.1.0
 
 
 dev_dependencies:

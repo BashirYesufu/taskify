@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../../util/ui_util/app_text_styles.dart';
-import '../../util/ui_util/color_manager.dart';
+import '../../util/ui_util/color/color_manager.dart';
 
 class AppInputField extends StatefulWidget {
   const AppInputField({
@@ -101,7 +100,7 @@ class _AppInputFieldState extends State<AppInputField> {
               children: [
                 Text(
                     widget.title,
-                    style: AppTextStyles.black(size: 14, weight: FontWeight.w500)
+                    style: AppTextStyles.regular(context, size: 14, weight: FontWeight.w500)
                 ),
               ],
             ),
@@ -120,7 +119,7 @@ class _AppInputFieldState extends State<AppInputField> {
               enabled: widget.enabled,
               maxLines: widget.maxLines,
               controller: widget.controller,
-              style: AppTextStyles.black(weight: FontWeight.w500),
+              style: AppTextStyles.medium(context, weight: FontWeight.w500),
               onChanged: widget.onChanged,
               focusNode: _focusNode,
               onTap: (){
@@ -146,7 +145,7 @@ class _AppInputFieldState extends State<AppInputField> {
                 prefixIcon: widget.prefixIcon,
                 suffixIcon: widget.suffixIcon,
                 filled: false,
-                prefixStyle: AppTextStyles.black(),
+                prefixStyle: AppTextStyles.regular(context),
                 focusedBorder: InputBorder.none,
                 border: InputBorder.none,
               ),
